@@ -497,7 +497,7 @@ int acx_free_mechanics(acx_device_t *adev)
 
 int acx_init_ieee80211(acx_device_t *adev, struct ieee80211_hw *hw)
 {
-	hw->flags &= ~IEEE80211_HW_RX_INCLUDES_FCS;
+	hw->flags[0] &= ~IEEE80211_HW_RX_INCLUDES_FCS;
 	hw->queues = 1;
 	hw->wiphy->max_scan_ssids = 1;
 
@@ -525,7 +525,7 @@ int acx_init_ieee80211(acx_device_t *adev, struct ieee80211_hw *hw)
 	/* We base signal quality on winlevel approach of previous driver
 	 * TODO OW 20100615 This should into a common init code
 	 */
-	hw->flags |= IEEE80211_HW_SIGNAL_UNSPEC;
+	hw->flags[0] |= IEEE80211_HW_SIGNAL_UNSPEC;
 	hw->max_signal = 100;
 
 	if (IS_ACX100(adev)) {
@@ -945,7 +945,7 @@ void acx_op_configure_filter(struct ieee80211_hw *hw,
 		changed_flags, *total_flags);
 
 	/* OWI TODO: Set also FIF_PROBE_REQ ? */
-	*total_flags &= (FIF_PROMISC_IN_BSS | FIF_ALLMULTI | FIF_FCSFAIL
+	*total_flags &= (FIF_ALLMULTI | FIF_FCSFAIL
 			| FIF_CONTROL | FIF_OTHER_BSS);
 
 	logf1(L_DEBUG, "2: *total_flags=0x%08x\n", *total_flags);
